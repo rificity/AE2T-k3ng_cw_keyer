@@ -3250,7 +3250,7 @@ void check_for_dead_op()
     debug_serial_port->println(F("loop: entering check_for_dead_op"));
   #endif    
     
-  if (dead_op_watchdog_active && ((dit_counter > 100) || (dah_counter > 100))) {
+  if (dead_op_watchdog_active && ((dit_counter > 50) || (dah_counter > 50))) {
     key_tx = 0;
   }
 }
