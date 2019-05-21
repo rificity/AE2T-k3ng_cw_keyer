@@ -1,4 +1,5 @@
 // Initial and hardcoded settings
+#define custom_say_hi_message "HI DE AE2T"
 #define initial_speed_wpm 26             // "factory default" keyer speed setting
 #define initial_command_mode_speed_wpm 20 // "factory default" command mode speed setting 
 #define initial_sidetone_freq 600        // "factory default" sidetone frequency setting
