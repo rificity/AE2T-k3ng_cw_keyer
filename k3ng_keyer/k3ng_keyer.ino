@@ -1378,6 +1378,14 @@ byte zero = 0;
 byte iambic_flag = 0;
 unsigned long last_config_write = 0;
 
+//custom say-hi message
+#ifdef FEATURE_CUSTOM_SAY_HI
+char mycallsign[] = custom_say_hi_message;
+#else //default message
+char mycallsign[] = "HI";
+#endif
+char sayhi_temp[sizeof(mycallsign)];
+
 #ifdef FEATURE_SLEEP
   unsigned long last_activity_time = 0;
 #endif
@@ -17047,14 +17055,13 @@ void initialize_display(){
       byte oldSideTone = configuration.sidetone_mode;
       key_tx = 0;
       configuration.sidetone_mode = SIDETONE_ON;     
-      #ifdef FEATURE_DISPLAY
-        lcd_center_print_timed("h",1,4000);
-      #endif
-      send_char('H',KEYER_NORMAL);
-      #ifdef FEATURE_DISPLAY
-        lcd_center_print_timed("hi",1,4000);
-      #endif
-      send_char('I',KEYER_NORMAL); 
+      for (byte i = 0; i < sizeof(mycallsign); i++) {
+        send_char(mycallsign[i], KEYER_NORMAL);
+#ifdef FEATURE_DISPLAY
+        sayhi_temp[i] = mycallsign[i];
+        lcd_center_print_timed(sayhi_temp, 1, 4000);
+#endif
+      }
       configuration.sidetone_mode = oldSideTone; 
       key_tx = oldKey;     
     #endif //OPTION_DO_NOT_SAY_HI
