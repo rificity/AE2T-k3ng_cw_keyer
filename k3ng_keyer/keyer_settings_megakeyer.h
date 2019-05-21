@@ -2,6 +2,7 @@
 //       Initial setting for W6IPA megakeyer v1.1 (CC) BY-NC-SA
 //       Project files are available here https://github.com/w6ipa/megakeyer
 //
+#define custom_say_hi_message "HI DE AE2T"
 #define initial_speed_wpm 20             // "factory default" keyer speed setting
 #define initial_command_mode_speed_wpm 20 // "factory default" command mode speed setting 
 #define initial_sidetone_freq 600        // "factory default" sidetone frequency setting
