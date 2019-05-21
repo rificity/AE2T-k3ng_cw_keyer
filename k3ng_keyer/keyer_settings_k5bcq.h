@@ -23,8 +23,8 @@
 #define initial_qrss_dit_length 1        // QRSS dit length in seconds
 #define initial_pot_wpm_low_value 13     // Potentiometer WPM fully CCW
 #define initial_pot_wpm_high_value 35    // Potentiometer WPM fully CW
-#define wpm_limit_low 5
-#define wpm_limit_high 60
+#define wpm_limit_low 14
+#define wpm_limit_high 81
 #define potentiometer_change_threshold 0.9 // don't change the keyer speed until pot wpm has changed more than this
 #define send_buffer_size 150
 #define default_length_letterspace 3
@@ -41,8 +41,9 @@
 #define winkey_xoff_threshold 20         // the number of chars in the buffer when we begin sending XOFFs
 #define winkey_xon_threshold 10          // the number of chars in the buffer below which we deactivate XOFF
 #define default_memory_repeat_time 3000  // time in milliseconds
-#define LCD_COLUMNS 16          //edit for 1602 or 1604 LCD
-#define LCD_ROWS 2           //edit for 1602 or 1604 LCD
+#define LCD_COLUMNS 20 //16          //edit for 1602 or 1604 LCD
+#define LCD_ROWS 4 //2           //edit for 1602 or 1604 LCD
+#define lcd_i2c_address_mathertel_PCF8574 0x27             // I2C address of display
 #define hell_pixel_microseconds 4025
 #define program_memory_limit_consec_spaces 1
 #define serial_leading_zeros 1            // set to 1 to activate leading zeros in serial numbers (i.e. #1 = 001)
@@ -270,4 +271,3 @@
 
 #define sidetone_volume_low_limit 10
 #define sidetone_volume_high_limit 500
-

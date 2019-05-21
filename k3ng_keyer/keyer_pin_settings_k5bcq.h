@@ -1,6 +1,17 @@
 /* Pins - you must review these and configure ! */
+
 #ifndef keyer_pin_settings_h
 #define keyer_pin_settings_h
+/* User LED headers
+ *  LED1 - D23
+ *  LED2 - D25
+ *  LED3 - D27
+ *  LED4 - D29
+ */
+#define user_led1 23 // not used anywhere yet but defined for future
+#define user_led2 25
+#define user_led3 27
+#define user_led4 29
 
 #define paddle_left 5
 #define paddle_right 4
@@ -10,7 +21,7 @@
 #define tx_key_line_4 0
 #define tx_key_line_5 0
 #define tx_key_line_6 0
-#define sidetone_line 31         // connect a speaker for sidetone   Set to "12" if not using Twin T oscillator
+#define sidetone_line 12 //31         // connect a speaker for sidetone   Set to "12" if not using Twin T oscillator
 #define potentiometer A0        // Speed potentiometer (0 to 5 V) Use pot from 1k to 10k
 #define ptt_tx_1 10              // PTT ("push to talk") lines
 #define ptt_tx_2 11              //   Can be used for keying fox transmitter, T/R switch, or keying slow boatanchors
@@ -18,14 +29,14 @@
 #define ptt_tx_4 0
 #define ptt_tx_5 0
 #define ptt_tx_6 0
-#define tx_key_dit 0            // if defined, goes active for dit (any transmitter) - customized with tx_key_dit_and_dah_pins_active_state and tx_key_dit_and_dah_pins_inactive_state
-#define tx_key_dah 0            // if defined, goes active for dah (any transmitter) - customized with tx_key_dit_and_dah_pins_active_state and tx_key_dit_and_dah_pins_inactive_state
+#define tx_key_dit 25            // if defined, goes active for dit (any transmitter) - customized with tx_key_dit_and_dah_pins_active_state and tx_key_dit_and_dah_pins_inactive_state
+#define tx_key_dah 25            // if defined, goes active for dah (any transmitter) - customized with tx_key_dit_and_dah_pins_active_state and tx_key_dit_and_dah_pins_inactive_state
 
 #define potentiometer_enable_pin 0  // if defined, the potentiometer will be enabled only when this pin is held low; set to 0 to ignore this pin
 
 #ifdef FEATURE_COMMAND_BUTTONS
   #define analog_buttons_pin A1
-  #define command_mode_active_led 29
+  #define command_mode_active_led user_led1 
 #endif //FEATURE_COMMAND_BUTTONS
 
 /*
@@ -75,8 +86,8 @@ FEATURE_SIDETONE_SWITCH
 // rotary encoder pins and options - rotary encoder code from Jim Balls M0CKE
 #ifdef FEATURE_ROTARY_ENCODER
   #define OPTION_ENCODER_HALF_STEP_MODE     // Half-step mode?
-  #define rotary_pin1 6                      // CW Encoder Pin
-  #define rotary_pin2 7                    // CCW Encoder Pin
+  #define rotary_pin1 7                    // CW Encoder Pin
+  #define rotary_pin2 6                    // CCW Encoder Pin
   #define OPTION_ENCODER_ENABLE_PULLUPS     // define to enable weak pullups.
 #endif //FEATURE_ROTARY_ENCODER
 
@@ -100,7 +111,7 @@ FEATURE_SIDETONE_SWITCH
 #endif //FEATURE_STRAIGHT_KEY
 
 #ifdef FEATURE_CW_DECODER
-  #define cw_decoder_pin A3//A11 //A5 //A3
+  #define cw_decoder_pin A11 //A5 //A3
   #ifdef OPTION_CW_DECODER_GOERTZEL_AUDIO_DETECTOR
     #define cw_decoder_audio_input_pin A0 // this must be an analog pin!
   #endif //OPTION_CW_DECODER_GOERTZEL_AUDIO_DETECTOR

@@ -9,11 +9,7 @@
 
 */
 
-// #define HARDWARE_NANOKEYER_REV_D   // https://nanokeyer.wordpress.com/nanokeyer-info/  edit these files: keyer_pin_settings_nanokeyer_rev_d.h, keyer_features_and_options_nanokeyer_rev_d.h, keyer_settings_nanokeyer_rev_d.h  
 #define HARDWARE_K5BCQ   // edit these files: keyer_pin_settings_k5bcq.h, keyer_features_and_options_k5bcq.h, keyer_settings_k5bcq.h 
-// #define HARDWARE_MEGAKEYER // https://github.com/w6ipa/megakeyer
-// #define HARDWARE_TEST_EVERYTHING
-// #define HARDWARE_TEST
 
 
 // Do not touch anything below this line!
