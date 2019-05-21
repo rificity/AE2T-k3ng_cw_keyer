@@ -1,3 +1,5 @@
+WARNING: This is a pared-down version of the code. It does not contain files for keyer versions I do not have. It does contain some customizations that I prefer.
+
 # k3ng_cw_keyer
 K3NG Arduino CW Keyer
 
