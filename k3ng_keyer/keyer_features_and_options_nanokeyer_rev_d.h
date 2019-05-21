@@ -1,6 +1,7 @@
 // compile time features and options - comment or uncomment to add or delete features
 // FEATURES add more bytes to the compiled binary, OPTIONS change code behavior
 
+#define FEATURE_CUSTOM_SAY_HI //make comment to use default
 #define FEATURE_COMMAND_BUTTONS
 //#define FEATURE_COMMAND_LINE_INTERFACE        // (this no longer requires FEATURE_SERIAL)
 #define FEATURE_MEMORIES
