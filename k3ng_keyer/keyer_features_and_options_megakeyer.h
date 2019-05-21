@@ -20,9 +20,9 @@
 #define FEATURE_PS2_KEYBOARD        // Use a PS2 keyboard to send code - Change keyboard layout (non-US) in K3NG_PS2Keyboard.h.  Additional options below.
 // #define FEATURE_USB_KEYBOARD          // Use a USB keyboard to send code - Uncomment three lines in k3ng_keyer.ino (search for note_usb_uncomment_lines)
 // #define FEATURE_CW_COMPUTER_KEYBOARD  // Have an Arduino Due or Leonardo act as a USB HID (Human Interface Device) keyboard and use the paddle to "type" characters on the computer -- uncomment this line in ino file: #include <Keyboard.h>
-// #define FEATURE_DEAD_OP_WATCHDOG
-// #define FEATURE_AUTOSPACE
-// #define FEATURE_FARNSWORTH
+#define FEATURE_DEAD_OP_WATCHDOG
+ #define FEATURE_AUTOSPACE
+ #define FEATURE_FARNSWORTH
 // #define FEATURE_DL2SBA_BANKSWITCH       // Switch memory banks feature as described here: http://dl2sba.com/index.php?option=com_content&view=article&id=131:nanokeyer&catid=15:shack&Itemid=27#english
 // #define FEATURE_LCD_4BIT                // classic LCD disidefplay using 4 I/O lines
 // #define FEATURE_LCD_8BIT                // classic LCD display using 8 I/O lines
@@ -54,7 +54,6 @@
 // #define FEATURE_4x4_KEYPAD          // code contributed by Jack, W0XR - documentation: https://github.com/k3ng/k3ng_cw_keyer/wiki/380-Feature:-Keypad
 // #define FEATURE_3x4_KEYPAD          // code contributed by Jack, W0XR - documentation: https://github.com/k3ng/k3ng_cw_keyer/wiki/380-Feature:-Keypad
 // #define FEATURE_SEQUENCER
-// #define FEATURE_SD_CARD_SUPPORT
 
 // #define FEATURE_COMMAND_LINE_INTERFACE_ON_SECONDARY_PORT     // Activate the Command Line interface on the secondary serial port
 #define OPTION_PRIMARY_SERIAL_PORT_DEFAULT_WINKEY_EMULATION  // Use when activating both FEATURE_WINKEY_EMULATION and FEATURE_COMMAND_LINE_INTERFACE 
@@ -93,15 +92,12 @@
 // #define OPTION_CW_KEYBOARD_GERMAN
 // #define OPTION_CW_DECODER_GOERTZEL_AUDIO_DETECTOR
 // #define OPTION_INVERT_PADDLE_PIN_LOGIC
-#define OPTION_ADVANCED_SPEED_DISPLAY //enables "nerd" speed visualization on display: wpm, cpm (char per min), duration of dit and dah in milliseconds and ratio (contributed by Giorgio, IZ2XBZ)
+//#define OPTION_ADVANCED_SPEED_DISPLAY //enables "nerd" speed visualization on display: wpm, cpm (char per min), duration of dit and dah in milliseconds and ratio (contributed by Giorgio, IZ2XBZ)
 #define OPTION_PROSIGN_SUPPORT    // additional prosign support for paddle and straight key echo on display, CLI, and in memory storage
 // #define OPTION_RUSSIAN_LANGUAGE_SEND_CLI // Russian language CLI sending support (contributed by Павел Бирюков, UA1AQC)
 #define OPTION_DO_NOT_SEND_UNKNOWN_CHAR_QUESTION
 #define OPTION_CMOS_SUPER_KEYER_IAMBIC_B_TIMING_ON_BY_DEFAULT
 // #define OPTION_SIDETONE_DIGITAL_OUTPUT_NO_SQUARE_WAVE
-
-// #define OPTION_DIRECT_PADDLE_PIN_READS_MEGA   // only works with Mega and pins 2 and 5 - minor performance increase
-// #define OPTION_DIRECT_PADDLE_PIN_READS_UNO    // Unos or Nanos
 
 // #define OPTION_WORDSWORTH_CZECH
 // #define OPTION_WORDSWORTH_DEUTSCH
@@ -114,4 +110,3 @@
 // #define OPTION_EXCLUDE_MILL_MODE
 
 //#define OPTION_ENABLE_SERIAL_PORT_CHECKING_WHILE_SENDING_CW_MAY_CAUSE_PROBLEMS
-

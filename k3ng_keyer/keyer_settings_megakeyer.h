@@ -8,8 +8,6 @@
 #define initial_sidetone_freq 600        // "factory default" sidetone frequency setting
 #define sidetone_hz_limit_low 299
 #define sidetone_hz_limit_high 2001
-#define sidetone_hz_limit_low 299
-#define sidetone_hz_limit_high 2001
 #define hz_high_beep 1500                // frequency in hertz of high beep
 #define hz_low_beep 400                  // frequency in hertz of low beep
 #define initial_dah_to_dit_ratio 300     // 300 = 3 / normal 3:1 ratio
@@ -28,8 +26,8 @@
 #define initial_qrss_dit_length 1        // QRSS dit length in seconds
 #define initial_pot_wpm_low_value 13     // Potentiometer WPM fully CCW
 #define initial_pot_wpm_high_value 35    // Potentiometer WPM fully CW
-#define wpm_limit_low 5
-#define wpm_limit_high 60
+#define wpm_limit_low 4
+#define wpm_limit_high 61
 #define potentiometer_change_threshold 0.9 // don't change the keyer speed until pot wpm has changed more than this
 #define send_buffer_size 150
 #define default_length_letterspace 3
@@ -276,4 +274,3 @@
 
 #define sidetone_volume_low_limit 10
 #define sidetone_volume_high_limit 500
-
