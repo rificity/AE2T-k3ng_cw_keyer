@@ -1,13 +1,14 @@
 // compile time features and options - comment or uncomment to add or delete features
 // FEATURES add more bytes to the compiled binary, OPTIONS change code behavior
 
+ #define FEATURE_CUSTOM_SAY_HI //make comment to use default
 
  #define FEATURE_COMMAND_BUTTONS
- #define FEATURE_COMMAND_LINE_INTERFACE  // Command Line Interface functionality
-// #define FEATURE_MEMORIES             // on the Arduino Due, you must have FEATURE_EEPROM_E24C1024 and E24C1024 EEPROM hardware in order to compile this
-// #define FEATURE_MEMORY_MACROS
+// #define FEATURE_COMMAND_LINE_INTERFACE  // Command Line Interface functionality // takes a lot of memory
+ #define FEATURE_MEMORIES             // on the Arduino Due, you must have FEATURE_EEPROM_E24C1024 and E24C1024 EEPROM hardware in order to compile this
+ #define FEATURE_MEMORY_MACROS
 // The Nanokeyer is very tight on memory. To use Winkeyer emulation, you will have to slash and burn a lot of other features severely.
-// #define FEATURE_WINKEY_EMULATION    // disabling Automatic Software Reset is highly recommended (see documentation)
+ #define FEATURE_WINKEY_EMULATION    // disabling Automatic Software Reset is highly recommended (see documentation)
 // #define FEATURE_BEACON
 // #define FEATURE_TRAINING_COMMAND_LINE_INTERFACE
  #define FEATURE_POTENTIOMETER         // do not enable unless you have a potentiometer connected, otherwise noise will falsely trigger wpm changes
@@ -34,7 +35,7 @@
 // #define FEATURE_CW_DECODER
 // #define FEATURE_SLEEP                   // go to sleep after x minutes to conserve battery power (not compatible with Arduino DUE, may have mixed results with Mega and Mega ADK)
 // #define FEATURE_ROTARY_ENCODER          // rotary encoder speed control
-// #define FEATURE_CMOS_SUPER_KEYER_IAMBIC_B_TIMING
+ #define FEATURE_CMOS_SUPER_KEYER_IAMBIC_B_TIMING
 // #define FEATURE_USB_MOUSE               // Uncomment three lines in k3ng_keyer.ino (search for note_usb_uncomment_lines)
 // #define FEATURE_CAPACITIVE_PADDLE_PINS  // remove the bypass capacitors on the paddle_left and paddle_right lines when using capactive paddles
 // #define FEATURE_LED_RING                // Mayhew Labs Led Ring support
@@ -58,8 +59,8 @@
                                                              //    hold command button down at boot up to activate CLI mode
 
 // #define OPTION_SUPPRESS_SERIAL_BOOT_MSG
-#define OPTION_INCLUDE_PTT_TAIL_FOR_MANUAL_SENDING
-#define OPTION_EXCLUDE_PTT_HANG_TIME_FOR_MANUAL_SENDING
+//#define OPTION_INCLUDE_PTT_TAIL_FOR_MANUAL_SENDING
+//#define OPTION_EXCLUDE_PTT_HANG_TIME_FOR_MANUAL_SENDING
 // #define OPTION_WINKEY_DISCARD_BYTES_AT_STARTUP     // if ASR is not disabled, you may need this to discard errant serial port bytes at startup
 // #define OPTION_WINKEY_STRICT_EEPROM_WRITES_MAY_WEAR_OUT_EEPROM // with this activated the unit will write non-volatile settings to EEPROM when set by Winkey commands
 // #define OPTION_WINKEY_SEND_WORDSPACE_AT_END_OF_BUFFER
@@ -75,7 +76,7 @@
  #define OPTION_REVERSE_BUTTON_ORDER                // This is mainly for the DJ0MY NanoKeyer http://nanokeyer.wordpress.com/
 //--------------------------------------------------------------------------------------------------------//
 #define OPTION_PROG_MEM_TRIM_TRAILING_SPACES         // trim trailing spaces from memory when programming in command mode
-#define OPTION_DIT_PADDLE_NO_SEND_ON_MEM_RPT         // this makes dit paddle memory interruption a little smoother
+//#define OPTION_DIT_PADDLE_NO_SEND_ON_MEM_RPT         // this makes dit paddle memory interruption a little smoother
 // #define OPTION_MORE_DISPLAY_MSGS                     // additional optional display messages - comment out to save memory
 // #define OPTION_WATCHDOG_TIMER                        // this enables a four second ATmega48/88/168/328 watchdog timer; use for unattended/remote operation only
 // #define OPTION_MOUSE_MOVEMENT_PADDLE               // experimental (just fooling around) - mouse movement will act like a paddle
@@ -96,11 +97,11 @@
 // #define OPTION_RUSSIAN_LANGUAGE_SEND_CLI // Russian language CLI sending support (contributed by Павел Бирюков, UA1AQC)
 #define OPTION_DO_NOT_SEND_UNKNOWN_CHAR_QUESTION
 // #define OPTION_CMOS_SUPER_KEYER_IAMBIC_B_TIMING_ON_BY_DEFAULT
-// #define OPTION_SIDETONE_DIGITAL_OUTPUT_NO_SQUARE_WAVE
+// #define OPTION_SIDETONE_DIGITAL_OUTPUT_NO_SQUARE_WAVE //used for hardware sidetone oscillator
 // #define FEATURE_SD_CARD_SUPPORT
 
 // #define OPTION_DIRECT_PADDLE_PIN_READS_MEGA   // only works with Mega and pins 2 and 5 - minor performance increase
-// #define OPTION_DIRECT_PADDLE_PIN_READS_UNO    // Unos or Nanos
+ #define OPTION_DIRECT_PADDLE_PIN_READS_UNO    // Unos or Nanos
 
 // #define OPTION_WORDSWORTH_CZECH
 // #define OPTION_WORDSWORTH_DEUTSCH
@@ -110,6 +111,6 @@
 
 // #define OPTION_DFROBOT_LCD_COMMAND_BUTTONS
 
-// #define OPTION_EXCLUDE_MILL_MODE
+// #define OPTION_EXCLUDE_MILL_MODE // not available in Nanokeyer
 
 //#define OPTION_ENABLE_SERIAL_PORT_CHECKING_WHILE_SENDING_CW_MAY_CAUSE_PROBLEMS

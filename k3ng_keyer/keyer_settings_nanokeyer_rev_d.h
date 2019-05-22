@@ -1,4 +1,5 @@
 // Initial and hardcoded settings
+#define custom_say_hi_message "HI DE AE2T"
 #define initial_speed_wpm 26             // "factory default" keyer speed setting
 #define initial_command_mode_speed_wpm 20 // "factory default" command mode speed setting 
 #define initial_sidetone_freq 600        // "factory default" sidetone frequency setting
@@ -8,7 +9,7 @@
 #define hz_low_beep 400                  // frequency in hertz of low beep
 #define initial_dah_to_dit_ratio 300     // 300 = 3 / normal 3:1 ratio
 #define initial_ptt_lead_time_tx1 0         // PTT lead time in mS
-#define initial_ptt_tail_time_tx1 10         // PTT tail time in mS
+#define initial_ptt_tail_time_tx1 10        // PTT tail time in mS
 #define initial_ptt_lead_time_tx2 0         // PTT lead time in mS
 #define initial_ptt_tail_time_tx2 10         // PTT tail time in mS
 #define initial_ptt_lead_time_tx3 0         // PTT lead time in mS
@@ -21,7 +22,7 @@
 #define initial_ptt_tail_time_tx6 10         // PTT tail time in mS
 #define initial_qrss_dit_length 1        // QRSS dit length in seconds
 #define initial_pot_wpm_low_value 10     // Potentiometer WPM fully CCW
-#define initial_pot_wpm_high_value 60    // Potentiometer WPM fully CW
+#define initial_pot_wpm_high_value 40    // Potentiometer WPM fully CW
 #define wpm_limit_low 10
 #define wpm_limit_high 60
 #define potentiometer_change_threshold 0.9 // don't change the keyer speed until pot wpm has changed more than this
@@ -32,7 +33,7 @@
 #define default_first_extension_time 0   // number of milliseconds to extend first sent dit or dah
 #define default_pot_full_scale_reading 1023
 #define default_weighting 50             // 50 = weighting factor of 1 (normal)
-#define default_ptt_hang_time_wordspace_units 0.0
+#define default_ptt_hang_time_wordspace_units 0.0 //1.5 
 #define memory_area_end 1023             // the eeprom location where memory space ends
 #define winkey_c0_wait_time 1            // the number of milliseconds to wait to send 0xc0 byte after send buffer has been sent
 #define winkey_command_timeout_ms 5000
