@@ -1,4 +1,4 @@
-WARNING: This is a pared-down version of the code. It does not contain files for keyer versions I do not have. It does contain some customizations that I prefer.
+WARNING: This is a pared-down version of the keyer code for use with the W6IPA/CalQRP/Megakeyer board. It does not contain files for other keyer versions. It does contain some customizations specific to that board.
 
 # k3ng_cw_keyer
 K3NG Arduino CW Keyer
