@@ -1393,7 +1393,7 @@ char sayhi_temp[sizeof(mycallsign)];
 
 #ifdef FEATURE_DISPLAY
   enum lcd_statuses {LCD_CLEAR, LCD_REVERT, LCD_TIMED_MESSAGE, LCD_SCROLL_MSG};
-  #define default_display_msg_delay 1000
+  #define default_display_msg_delay 3000
 #endif //FEATURE_DISPLAY
 
 #ifdef FEATURE_LCD_ADAFRUIT_I2C
@@ -2249,15 +2249,16 @@ void service_keypad(){
         //play_memory(mem9); //MEMORY 9
         break;
       case '0':
-        add_to_send_buffer(SERIAL_SEND_BUFFER_MEMORY_NUMBER);
-        add_to_send_buffer(mem10);      
-        //play_memory(mem10); //MEMORY 10
+//        add_to_send_buffer(SERIAL_SEND_BUFFER_MEMORY_NUMBER);
+//        add_to_send_buffer(mem10);      
+//        //play_memory(mem10); //MEMORY 10
+        command_mode();
         break;
       case '#':
-        beep_boop();
+        boop();
         break;
       case '*':
-        beep_boop();
+        boop();
         break;
       case 'A':
         beep_boop();
@@ -2266,7 +2267,8 @@ void service_keypad(){
         beep_boop();
         break;
       case 'C':
-        command_mode();
+//        command_mode();
+        beep_boop();
         break;
       case 'D':
         beep_boop();
@@ -21138,4 +21140,3 @@ void update_time(){
 #endif // FEATURE_CLOCK
 // --------------------------------------------------------------   
 */
-
