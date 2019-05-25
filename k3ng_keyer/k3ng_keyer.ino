@@ -2252,16 +2252,15 @@ void service_keypad() {
         //play_memory(mem9); //MEMORY 9
         break;
       case '0':
-        //        add_to_send_buffer(SERIAL_SEND_BUFFER_MEMORY_NUMBER);
-        //        add_to_send_buffer(mem10);
-        //        //play_memory(mem10); //MEMORY 10
-        command_mode();
+                add_to_send_buffer(SERIAL_SEND_BUFFER_MEMORY_NUMBER);
+                add_to_send_buffer(mem10);
+                //play_memory(mem10); //MEMORY 10
         break;
       case '#':
-        lcd_center_print_timed("Xmtr Output: " + String(configuration.current_tx), 4, default_display_msg_delay);
+        command_mode();
         //        boop();
         break;
-      case '*':
+      case '#':
         lcd_center_print_timed("Speed " + String(configuration.wpm) + "wpm " + String(configuration.weighting) + "% " + String(configuration.dah_to_dit_ratio), 0, default_display_msg_delay);
         if (configuration.keyer_mode == 2) {lcd_center_print_timed("Iambic B",1, default_display_msg_delay);}
         if (configuration.keyer_mode == 3) {lcd_center_print_timed("Iambic A",1, default_display_msg_delay);}
