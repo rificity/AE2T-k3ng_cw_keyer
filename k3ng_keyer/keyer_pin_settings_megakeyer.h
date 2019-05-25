@@ -132,22 +132,16 @@ FEATURE_SIDETONE_SWITCH
 #endif
 
 #ifdef FEATURE_3x4_KEYPAD
-//  #define Row3 43
-//  #define Row2 42
-//  #define Row1 41
-//  #define Row0 40
-//  #define Col2 50
-//  #define Col1 49
-//  #define Col0 48
 /* This pin configuration works with the AllElectronics KP-22 
-   Leave C4 (D51) open on PCB */
-  #define Row3 40
-  #define Row2 41
-  #define Row1 42
-  #define Row0 43
-  #define Col2 48
-  #define Col1 49
-  #define Col0 50
+   Install a 3 and 4 pin headers on the TOP of the board
+*/
+  #define Row3 47
+  #define Row2 48
+  #define Row1 50
+  #define Row0 52
+  #define Col2 49
+  #define Col1 51
+  #define Col0 53
 #endif
 
 #ifdef FEATURE_SEQUENCER
