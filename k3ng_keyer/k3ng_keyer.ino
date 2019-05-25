@@ -1810,6 +1810,7 @@ byte colPins [KEYPAD_COLS] = {Col2, Col1, Col0}; //Arduino Mega Pins: 34,35,36--
 
 #if defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)
 Keypad kpd = Keypad(makeKeymap(keys), rowPins, colPins, KEYPAD_ROWS, KEYPAD_COLS);
+char escape_command_mode = 0;
 #endif
 
 unsigned long millis_rollover = 0;
@@ -2256,21 +2257,32 @@ void service_keypad() {
         //play_memory(mem9); //MEMORY 9
         break;
       case '0':
-                add_to_send_buffer(SERIAL_SEND_BUFFER_MEMORY_NUMBER);
-                add_to_send_buffer(mem10);
-                //play_memory(mem10); //MEMORY 10
+        add_to_send_buffer(SERIAL_SEND_BUFFER_MEMORY_NUMBER);
+        add_to_send_buffer(mem10);
+        //play_memory(mem10); //MEMORY 10
         break;
       case '*':
+        escape_command_mode = 0;
         command_mode();
         //        boop();
         break;
       case '#':
-        lcd_center_print_timed("Speed " + String(configuration.wpm) + "wpm TX:" + String(configuration.current_tx), 0, default_display_msg_delay);
-        if (configuration.keyer_mode == 2) {lcd_center_print_timed("Iambic B",1, default_display_msg_delay);}
-        if (configuration.keyer_mode == 3) {lcd_center_print_timed("Iambic A",1, default_display_msg_delay);}
-        if (configuration.keyer_mode == 4) {lcd_center_print_timed("Bug Mode",1, default_display_msg_delay);}
-        if (configuration.keyer_mode == 5) {lcd_center_print_timed("Ultimatic",1, default_display_msg_delay);}
-        if (configuration.keyer_mode == 6) {lcd_center_print_timed("Single Paddle",1, default_display_msg_delay);}
+        lcd_center_print_timed("Spd " + String(configuration.wpm) + "wpm TX:" + String(configuration.current_tx), 0, default_display_msg_delay);
+        if (configuration.keyer_mode == 2) {
+          lcd_center_print_timed("Iambic B", 1, default_display_msg_delay);
+        }
+        if (configuration.keyer_mode == 3) {
+          lcd_center_print_timed("Iambic A", 1, default_display_msg_delay);
+        }
+        if (configuration.keyer_mode == 4) {
+          lcd_center_print_timed("Bug Mode", 1, default_display_msg_delay);
+        }
+        if (configuration.keyer_mode == 5) {
+          lcd_center_print_timed("Ultimatic", 1, default_display_msg_delay);
+        }
+        if (configuration.keyer_mode == 6) {
+          lcd_center_print_timed("Single Paddle", 1, default_display_msg_delay);
+        }
         boop();
         break;
       case 'A':
@@ -6794,7 +6806,15 @@ void command_mode()
 #ifdef FEATURE_ROTARY_ENCODER
       check_rotary_encoder();
 #endif //FEATURE_ROTARY_ENCODER    
-
+      /**********************testing code ***************************/
+#if defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)
+      service_keypad_cmd();
+      if (escape_command_mode == 1) {
+        stay_in_command_mode = 0;
+        looping = 0;
+      }
+#endif
+      /***************************************************************/
       check_paddles();
 
       if (dit_buffer) {
@@ -21718,3 +21738,37 @@ void debug_blink() {
   #endif // FEATURE_CLOCK
   // --------------------------------------------------------------
 */
+
+/************ testing code *********************************************/
+#if defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)
+void service_keypad_cmd() {
+
+  // Code contributed by Jack, W0XR
+
+  char key = kpd.getKey();
+
+  if (key) { // Check for a valid key.
+
+#if defined(DEBUG_KEYPAD_SERIAL)
+    debug_serial_port->print("service_keypad: key:");
+    debug_serial_port->println(key);
+#endif
+
+    switch (key) {
+      case '1':
+        escape_command_mode = 0;
+        beep();
+        break;
+      case '*':
+        escape_command_mode = 1; // 1/TRUE to exit command mode
+        break;
+      default:
+        escape_command_mode = 0;
+        beep();
+        break;
+    }
+
+  } //if(key)
+
+} // service_keypad_cmd()
+#endif //defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)
