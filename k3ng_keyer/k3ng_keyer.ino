@@ -1,3 +1,5 @@
+// This is the project for the K5BCQ keyer
+// https://www.qsl.net/k5bcq/Kits/Kits.html
 /*
 
   K3NG Arduino CW Keyer
