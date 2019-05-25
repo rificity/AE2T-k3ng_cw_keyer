@@ -2256,20 +2256,18 @@ void service_keypad() {
                 add_to_send_buffer(mem10);
                 //play_memory(mem10); //MEMORY 10
         break;
-      case '#':
+      case '*':
         command_mode();
         //        boop();
         break;
       case '#':
-        lcd_center_print_timed("Speed " + String(configuration.wpm) + "wpm " + String(configuration.weighting) + "% " + String(configuration.dah_to_dit_ratio), 0, default_display_msg_delay);
+        lcd_center_print_timed("Speed " + String(configuration.wpm) + "wpm TX:" + String(configuration.current_tx), 0, default_display_msg_delay);
         if (configuration.keyer_mode == 2) {lcd_center_print_timed("Iambic B",1, default_display_msg_delay);}
         if (configuration.keyer_mode == 3) {lcd_center_print_timed("Iambic A",1, default_display_msg_delay);}
         if (configuration.keyer_mode == 4) {lcd_center_print_timed("Bug Mode",1, default_display_msg_delay);}
         if (configuration.keyer_mode == 5) {lcd_center_print_timed("Ultimatic",1, default_display_msg_delay);}
         if (configuration.keyer_mode == 6) {lcd_center_print_timed("Single Paddle",1, default_display_msg_delay);}
-        lcd_center_print_timed("Sidetone " + String(configuration.hz_sidetone) + "Hz " + String(configuration.sidetone_volume), 2, default_display_msg_delay);
-        lcd_center_print_timed("Current TX: " + String(configuration.current_tx), 3, default_display_msg_delay);
-        //        boop();
+        boop();
         break;
       case 'A':
         beep_boop();
