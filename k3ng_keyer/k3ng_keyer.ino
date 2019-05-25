@@ -1,3 +1,7 @@
+//
+//       Features for W6IPA megakeyer v1.1 (CC) BY-NC-SA
+//       Project files are available here https://github.com/w6ipa/megakeyer
+//
 /*
 
   K3NG Arduino CW Keyer
