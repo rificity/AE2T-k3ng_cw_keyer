@@ -1393,7 +1393,7 @@ unsigned long last_activity_time = 0;
 
 #ifdef FEATURE_DISPLAY
 enum lcd_statuses {LCD_CLEAR, LCD_REVERT, LCD_TIMED_MESSAGE, LCD_SCROLL_MSG};
-#define default_display_msg_delay 1000
+#define default_display_msg_delay 3000
 #endif //FEATURE_DISPLAY
 
 #ifdef FEATURE_LCD_ADAFRUIT_I2C
@@ -2252,16 +2252,24 @@ void service_keypad() {
         //play_memory(mem9); //MEMORY 9
         break;
       case '0':
-        add_to_send_buffer(SERIAL_SEND_BUFFER_MEMORY_NUMBER);
-        add_to_send_buffer(mem10);
-        //play_memory(mem10); //MEMORY 10
+                add_to_send_buffer(SERIAL_SEND_BUFFER_MEMORY_NUMBER);
+                add_to_send_buffer(mem10);
+                //play_memory(mem10); //MEMORY 10
         break;
       case '#':
-        beep_boop();
-        break;
-      case '*':
         command_mode();
-        //        beep_boop();
+        //        boop();
+        break;
+      case '#':
+        lcd_center_print_timed("Speed " + String(configuration.wpm) + "wpm " + String(configuration.weighting) + "% " + String(configuration.dah_to_dit_ratio), 0, default_display_msg_delay);
+        if (configuration.keyer_mode == 2) {lcd_center_print_timed("Iambic B",1, default_display_msg_delay);}
+        if (configuration.keyer_mode == 3) {lcd_center_print_timed("Iambic A",1, default_display_msg_delay);}
+        if (configuration.keyer_mode == 4) {lcd_center_print_timed("Bug Mode",1, default_display_msg_delay);}
+        if (configuration.keyer_mode == 5) {lcd_center_print_timed("Ultimatic",1, default_display_msg_delay);}
+        if (configuration.keyer_mode == 6) {lcd_center_print_timed("Single Paddle",1, default_display_msg_delay);}
+        lcd_center_print_timed("Sidetone " + String(configuration.hz_sidetone) + "Hz " + String(configuration.sidetone_volume), 2, default_display_msg_delay);
+        lcd_center_print_timed("Current TX: " + String(configuration.current_tx), 3, default_display_msg_delay);
+        //        boop();
         break;
       case 'A':
         beep_boop();
@@ -2270,7 +2278,8 @@ void service_keypad() {
         beep_boop();
         break;
       case 'C':
-        command_mode();
+        //        command_mode();
+        beep_boop();
         break;
       case 'D':
         beep_boop();
@@ -6723,8 +6732,6 @@ void command_mode()
 #ifdef OPTION_WATCHDOG_TIMER
   wdt_disable();
 #endif //OPTION_WATCHDOG_TIMER
-
-
   byte looping;
   byte button_that_was_pressed = 0;
   byte paddle_hit = 0;
@@ -6832,6 +6839,7 @@ void command_mode()
 
 
     // end new code
+
 
 #ifdef DEBUG_COMMAND_MODE
     debug_serial_port->print(F("command_mode: cwchar: "));
@@ -7141,9 +7149,16 @@ void command_mode()
         case 11122: play_memory(2); break;
         case 11112: play_memory(3); break;
         case 11111: play_memory(4); break;
+        case 21111: play_memory(5); break;
+        case 22111: play_memory(6); break;
+        case 22211: play_memory(7); break;
+        case 22221: play_memory(8); break;
 #endif
-        case 121212: send_char(75, KEYER_NORMAL); send_char(51, KEYER_NORMAL); send_char(78, KEYER_NORMAL); send_char(71, KEYER_NORMAL); send_char(32, KEYER_NORMAL);
-          send_char(55, KEYER_NORMAL); send_char(51, KEYER_NORMAL); send_char(32, KEYER_NORMAL); send_char(69, KEYER_NORMAL); send_char(69, KEYER_NORMAL);
+        case 121212: // an easter egg
+          send_char(65, KEYER_NORMAL); send_char(69, KEYER_NORMAL); send_char(50, KEYER_NORMAL); send_char(84, KEYER_NORMAL); send_char(32, KEYER_NORMAL);
+          send_char(55, KEYER_NORMAL); send_char(51, KEYER_NORMAL); send_char(32, KEYER_NORMAL);
+          send_char(69, KEYER_NORMAL); send_char(83, KEYER_NORMAL); send_char(69, KEYER_NORMAL);
+          send_char(32, KEYER_NORMAL); send_char(69, KEYER_NORMAL); send_char(69, KEYER_NORMAL);
           break;
 
 
@@ -15154,8 +15169,7 @@ int convert_cw_number_to_ascii (long number_in)
 #if !defined(OPTION_PROSIGN_SUPPORT)
     case 2111212: return '*'; break; // BK
 #endif
-    //    case 221122: return 44; break;  // ,
-    case 221122: return '!'; break;  // ! sp5iou 20180328
+    case 221122: return 44; break;  // ,
     case 121212: return '.'; break;
     case 122121: return '@'; break;
     case 222222: return 92; break;  // special hack; six dahs = \ (backslash)
