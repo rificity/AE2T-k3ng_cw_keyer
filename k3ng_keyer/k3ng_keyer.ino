@@ -6833,6 +6833,7 @@ void command_mode()
         looping = 0;
       }
 #endif
+
       check_paddles();
 
       if (dit_buffer) {
@@ -6896,7 +6897,7 @@ void command_mode()
 #ifdef FEATURE_DISPLAY
           lcd_center_print_timed("Iambic A", 0, default_display_msg_delay);
 #endif
-          send_dit();
+          beep();
           break;
         case 2111: // B - Iambic mode
           configuration.keyer_mode = IAMBIC_B;
@@ -6907,7 +6908,7 @@ void command_mode()
 #ifdef FEATURE_DISPLAY
           lcd_center_print_timed("Iambic B", 0, default_display_msg_delay);
 #endif
-          send_dit();
+          beep();
           break;
         case 2121: // C - Single paddle mode
           configuration.keyer_mode = SINGLE_PADDLE;
@@ -6920,9 +6921,16 @@ void command_mode()
             lcd_center_print_timed("Single Paddle", 0, default_display_msg_delay);
           }
 #endif
-          send_dit();
+          beep();
           break;
         case 1: // E - announce spEed
+#ifdef FEATURE_DISPLAY
+          if (LCD_COLUMNS < 9) {
+            lcd_center_print_timed(String(configuration.wpm) + " WPM", 0, default_display_msg_delay);
+          } else {
+            lcd_center_print_timed("Speed " + String(configuration.wpm) + " WPM", 0, default_display_msg_delay);
+          }
+#endif
           delay(250);
           sprintf(c, "%d", configuration.wpm);
           send_char(c[0], KEYER_NORMAL);
@@ -6941,7 +6949,8 @@ void command_mode()
             lcd_center_print_timed("Ultimatic", 0, default_display_msg_delay);
           }
 #endif
-          send_dit();
+          delay(250);
+          beep();
           break;
 #if !defined(OPTION_SIDETONE_DIGITAL_OUTPUT_NO_SQUARE_WAVE)
         case 1121: command_sidetone_freq_adj(); break;                    // F - adjust sidetone frequency
@@ -6956,7 +6965,7 @@ void command_mode()
 #ifdef FEATURE_DISPLAY
           lcd_center_print_timed("Bug", 0, default_display_msg_delay);
 #endif
-          send_dit();
+          beep();
           break;
         case 1111:   // H - set weighting and dah to dit ratio to defaults
           configuration.weighting = default_weighting;
@@ -6966,10 +6975,11 @@ void command_mode()
           if (LCD_COLUMNS < 9) {
             lcd_center_print_timed("Dflt W+R", 0, default_display_msg_delay);
           } else {
-            lcd_center_print_timed("Dflt Wght & Ratio", 0, default_display_msg_delay);
+            lcd_center_print_timed("Reset to default", 0, default_display_msg_delay);
+            lcd_center_print_timed("Weight & Ratio", 1, default_display_msg_delay);
           }
 #endif
-          send_dit();
+          beep();
           break;
         case 11:                                                     // I - toggle TX enable / disable
           if (command_mode_disable_tx) {
@@ -7139,16 +7149,26 @@ void command_mode()
 #endif
           }
           config_dirty = 1;
-          send_dit();
+          beep();
           break;
 #endif
         case 122: // W - change wpm
           command_speed_mode(COMMAND_SPEED_MODE_KEYER_WPM);
           break;
 #ifdef FEATURE_MEMORIES
-        case 2122: command_set_mem_repeat_delay(); break; // Y - set memory repeat delay
+        case 2122:  // Y - set memory repeat delay
+          command_set_mem_repeat_delay();
+          break;
 #endif
-        case 2112: stay_in_command_mode = 0; break;     // X - exit command mode
+        case 2112:  // X - exit command mode
+          if (LCD_COLUMNS < 9) {
+            lcd_center_print_timed("Exit cmd", 0, default_display_msg_delay);
+          } else {
+            lcd_center_print_timed("Exit Command", 0, default_display_msg_delay);
+            lcd_center_print_timed("Mode", 1, default_display_msg_delay);
+          }
+          stay_in_command_mode = 0;
+          break;
 #ifdef FEATURE_AUTOSPACE
         case 2211: // Z - Autospace
           if (configuration.autospace_active) {
@@ -16440,7 +16460,7 @@ void program_memory(int memory_number)
       }
 #endif //FEATURE_MEMORY_MACROS
 
-#ifdef FEATURE_COMMAND_BUTTONS
+#ifdef FEATURE_COMMAND_BUTTONS // this is where we exit
       while (analogbuttonread(0)) {    // hit the button to get out of command mode if no paddle was hit
         loop1 = 0;
         loop2 = 0;
@@ -21772,6 +21792,7 @@ void service_keypad_cmd() {
 
     switch (key) {
       case '1':
+        //        program_memory(0);
         escape_command_mode = 0;
         beep();
         break;
