@@ -29,8 +29,8 @@
 #define ptt_tx_4 0
 #define ptt_tx_5 0
 #define ptt_tx_6 0
-#define tx_key_dit 25            // if defined, goes active for dit (any transmitter) - customized with tx_key_dit_and_dah_pins_active_state and tx_key_dit_and_dah_pins_inactive_state
-#define tx_key_dah 25            // if defined, goes active for dah (any transmitter) - customized with tx_key_dit_and_dah_pins_active_state and tx_key_dit_and_dah_pins_inactive_state
+#define tx_key_dit user_led2            // if defined, goes active for dit (any transmitter) - customized with tx_key_dit_and_dah_pins_active_state and tx_key_dit_and_dah_pins_inactive_state
+#define tx_key_dah user_led2            // if defined, goes active for dah (any transmitter) - customized with tx_key_dit_and_dah_pins_active_state and tx_key_dit_and_dah_pins_inactive_state
 
 #define potentiometer_enable_pin 0  // if defined, the potentiometer will be enabled only when this pin is held low; set to 0 to ignore this pin
 
@@ -98,8 +98,8 @@ FEATURE_SIDETONE_SWITCH
 #endif //FEATURE_LED_RING
 
 #ifdef FEATURE_ALPHABET_SEND_PRACTICE
-  #define correct_answer_led 27
-  #define wrong_answer_led 25
+  #define correct_answer_led user_led3
+  #define wrong_answer_led user_led4
 #endif //FEATURE_ALPHABET_SEND_PRACTICE
 
 #ifdef FEATURE_PTT_INTERLOCK
