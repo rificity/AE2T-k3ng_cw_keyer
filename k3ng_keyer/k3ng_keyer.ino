@@ -1397,7 +1397,7 @@ unsigned long last_activity_time = 0;
 
 #ifdef FEATURE_DISPLAY
 enum lcd_statuses {LCD_CLEAR, LCD_REVERT, LCD_TIMED_MESSAGE, LCD_SCROLL_MSG};
-#define default_display_msg_delay 1000
+#define default_display_msg_delay 2000
 #endif //FEATURE_DISPLAY
 
 #ifdef FEATURE_LCD_ADAFRUIT_I2C
