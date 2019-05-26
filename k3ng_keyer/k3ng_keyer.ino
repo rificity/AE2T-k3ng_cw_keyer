@@ -7159,8 +7159,8 @@ void command_mode()
           break;
 #ifdef FEATURE_MEMORIES
         case 2122: // Y - set memory repeat delay
-        command_set_mem_repeat_delay(); 
-        break; 
+          command_set_mem_repeat_delay();
+          break;
 #endif
         case 2112:  // X - exit command mode
           if (LCD_COLUMNS < 9) {
@@ -21796,8 +21796,18 @@ void service_keypad_cmd() {
 
     switch (key) {
       case '1':
-        escape_command_mode = 0;
+        switch_to_tx_silent(1);
         beep();
+#ifdef FEATURE_DISPLAY
+        lcd_center_print_timed("TX 1", 0, default_display_msg_delay);
+#endif
+        break;
+      case '2':
+        switch_to_tx_silent(2);
+        beep();
+#ifdef FEATURE_DISPLAY
+        lcd_center_print_timed("TX 2", 0, default_display_msg_delay);
+#endif
         break;
       case '*':
         escape_command_mode = 1; // 1/TRUE to exit command mode

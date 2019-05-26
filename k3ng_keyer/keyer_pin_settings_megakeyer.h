@@ -5,7 +5,7 @@
 #define paddle_left 34
 #define paddle_right 32
 #define tx_key_line_1 46       // (high = key down/tx on)
-#define tx_key_line_2 40 //12
+#define tx_key_line_2 40 //12 Using ring on TRS jack as TX2 instead of PTT
 #define tx_key_line_3 0
 #define tx_key_line_4 0
 #define tx_key_line_5 0
