@@ -1397,7 +1397,7 @@ unsigned long last_activity_time = 0;
 
 #ifdef FEATURE_DISPLAY
 enum lcd_statuses {LCD_CLEAR, LCD_REVERT, LCD_TIMED_MESSAGE, LCD_SCROLL_MSG};
-#define default_display_msg_delay 3000
+#define default_display_msg_delay 1000
 #endif //FEATURE_DISPLAY
 
 #ifdef FEATURE_LCD_ADAFRUIT_I2C
@@ -2267,21 +2267,43 @@ void service_keypad() {
         //        boop();
         break;
       case '#':
-        lcd_center_print_timed("Spd " + String(configuration.wpm) + "wpm TX:" + String(configuration.current_tx), 0, default_display_msg_delay);
-        if (configuration.keyer_mode == 2) {
-          lcd_center_print_timed("Iambic B", 1, default_display_msg_delay);
+        if (LCD_ROWS == 4) {
+          lcd_center_print_timed("Speed " + String(configuration.wpm) + "wpm " + String(configuration.weighting) + "% " + String(configuration.dah_to_dit_ratio), 0, default_display_msg_delay);
+          if (configuration.keyer_mode == 2) {
+            lcd_center_print_timed("Iambic B", 1, default_display_msg_delay);
+          }
+          if (configuration.keyer_mode == 3) {
+            lcd_center_print_timed("Iambic A", 1, default_display_msg_delay);
+          }
+          if (configuration.keyer_mode == 4) {
+            lcd_center_print_timed("Bug Mode", 1, default_display_msg_delay);
+          }
+          if (configuration.keyer_mode == 5) {
+            lcd_center_print_timed("Ultimatic", 1, default_display_msg_delay);
+          }
+          if (configuration.keyer_mode == 6) {
+            lcd_center_print_timed("Single Paddle", 1, default_display_msg_delay);
+          }
+          lcd_center_print_timed("Sidetone " + String(configuration.hz_sidetone) + "Hz " + String(configuration.sidetone_volume), 2, default_display_msg_delay);
+          lcd_center_print_timed("Current TX: " + String(configuration.current_tx), 3, default_display_msg_delay);
         }
-        if (configuration.keyer_mode == 3) {
-          lcd_center_print_timed("Iambic A", 1, default_display_msg_delay);
-        }
-        if (configuration.keyer_mode == 4) {
-          lcd_center_print_timed("Bug Mode", 1, default_display_msg_delay);
-        }
-        if (configuration.keyer_mode == 5) {
-          lcd_center_print_timed("Ultimatic", 1, default_display_msg_delay);
-        }
-        if (configuration.keyer_mode == 6) {
-          lcd_center_print_timed("Single Paddle", 1, default_display_msg_delay);
+        if (LCD_ROWS == 2) {
+          lcd_center_print_timed("Spd: " + String(configuration.wpm) + "wpm TX: " + String(configuration.current_tx), 0, default_display_msg_delay);
+          if (configuration.keyer_mode == 2) {
+            lcd_center_print_timed("Iambic B", 1, default_display_msg_delay);
+          }
+          if (configuration.keyer_mode == 3) {
+            lcd_center_print_timed("Iambic A", 1, default_display_msg_delay);
+          }
+          if (configuration.keyer_mode == 4) {
+            lcd_center_print_timed("Bug Mode", 1, default_display_msg_delay);
+          }
+          if (configuration.keyer_mode == 5) {
+            lcd_center_print_timed("Ultimatic", 1, default_display_msg_delay);
+          }
+          if (configuration.keyer_mode == 6) {
+            lcd_center_print_timed("Single Paddle", 1, default_display_msg_delay);
+          }
         }
         boop();
         break;
