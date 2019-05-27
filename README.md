@@ -8,4 +8,4 @@ The K3NG Keyer is an open source Arduino based CW (Morse Code) keyer with a lot 
 Documentation is located here:
 https://github.com/k3ng/k3ng_cw_keyer/wiki
 
-The K5BCQ version of the keyer is based on a board designed by Kees, K5BCQ and others on the Radioartisan groups.io message board https://groups.io/g/radioartisan. It is based on a Arduino Mega2560-mini board and combines a number of fetures that won't all fit on a Uno or Nano. Board and kit available at https://www.qsl.net/k5bcq/Kits/Kits.html Board and kit available at https://www.qsl.net/k5bcq/Kits/Kits.html
+The K5BCQ version of the keyer is based on a board designed by Kees, K5BCQ and others on the Radioartisan groups.io message board https://groups.io/g/radioartisan. It is based on a Arduino Mega2560-mini board and combines a number of fetures that won't all fit on a Uno or Nano. Board and kit available at https://www.qsl.net/k5bcq/Kits/Kits.html 
