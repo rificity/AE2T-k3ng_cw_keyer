@@ -21792,9 +21792,18 @@ void service_keypad_cmd() {
 
     switch (key) {
       case '1':
-        //        program_memory(0);
-        escape_command_mode = 0;
+        switch_to_tx_silent(1);
         beep();
+#ifdef FEATURE_DISPLAY
+        lcd_center_print_timed("TX 1", 0, default_display_msg_delay);
+#endif
+        break;
+      case '2':
+        switch_to_tx_silent(2);
+        beep();
+#ifdef FEATURE_DISPLAY
+        lcd_center_print_timed("TX 2", 0, default_display_msg_delay);
+#endif
         break;
       case '*':
         escape_command_mode = 1; // 1/TRUE to exit command mode
