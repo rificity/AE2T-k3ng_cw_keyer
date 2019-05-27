@@ -296,7 +296,9 @@ char sayhi_temp[sizeof(mycallsign)];
 unsigned long last_activity_time = 0;
 #endif
 
-
+#ifdef FEATURE_ALPHABET_SEND_PRACTICE
+char alpha_pract_in_progress = 0;
+#endif
 #ifdef FEATURE_DISPLAY
 enum lcd_statuses {LCD_CLEAR, LCD_REVERT, LCD_TIMED_MESSAGE, LCD_SCROLL_MSG};
 #define default_display_msg_delay 3000
@@ -4901,13 +4903,16 @@ void send_dit() {
   if ((tx_key_dit) && (key_tx)) {
     digitalWrite(tx_key_dit, tx_key_dit_and_dah_pins_active_state);
   }
-if ((tx_key_dit) && (configuration.current_tx == 1) && (key_tx)){ //come back to this later
-  digitalWrite(user_led3, tx_key_dit_and_dah_pins_active_state);
+//#ifndef FEATURE_ALPHABET_SEND_PRACTICE
+if(!alpha_pract_in_progress){
+  if ((tx_key_dit) && (configuration.current_tx == 1) && (key_tx)) { //come back to this later
+    digitalWrite(user_led3, tx_key_dit_and_dah_pins_active_state);
+  }
+  if ((tx_key_dit) && (configuration.current_tx == 2) && (key_tx)) { //come back to this later
+    digitalWrite(user_led4, tx_key_dit_and_dah_pins_active_state);
+  }
 }
-if ((tx_key_dit) && (configuration.current_tx == 2) && (key_tx)){ //come back to this later
-  digitalWrite(user_led4, tx_key_dit_and_dah_pins_active_state);
-}
-
+//#endif
 #ifdef FEATURE_QLF
   if (qlf_active) {
     loop_element_lengths((1.0 * (float(configuration.weighting) / 50) * (random(qlf_dit_min, qlf_dit_max) / 100.0)), keying_compensation, character_wpm);
@@ -4923,13 +4928,16 @@ if ((tx_key_dit) && (configuration.current_tx == 2) && (key_tx)){ //come back to
   if ((tx_key_dit) && (key_tx)) {
     digitalWrite(tx_key_dit, tx_key_dit_and_dah_pins_inactive_state);
   }
-  if ((tx_key_dit) && (configuration.current_tx == 1) && (key_tx)){ //come back to this later
-  digitalWrite(user_led3, tx_key_dit_and_dah_pins_inactive_state);
+//#ifndef FEATURE_ALPHABET_SEND_PRACTICE
+if(!alpha_pract_in_progress){
+  if ((tx_key_dit) && (configuration.current_tx == 1) && (key_tx)) { //come back to this later
+    digitalWrite(user_led3, tx_key_dit_and_dah_pins_inactive_state);
+  }
+  if ((tx_key_dit) && (configuration.current_tx == 2) && (key_tx)) { //come back to this later
+    digitalWrite(user_led4, tx_key_dit_and_dah_pins_inactive_state);
+  }
 }
-if ((tx_key_dit) && (configuration.current_tx == 2) && (key_tx)){ //come back to this later
-  digitalWrite(user_led4, tx_key_dit_and_dah_pins_inactive_state);
-}
-
+//#endif
 #ifdef DEBUG_VARIABLE_DUMP
   dit_end_time = millis();
 #endif
@@ -5012,13 +5020,16 @@ void send_dah() {
   if ((tx_key_dah) && (key_tx)) { //do dah
     digitalWrite(tx_key_dah, tx_key_dit_and_dah_pins_active_state);
   }
-if ((tx_key_dah) && (configuration.current_tx == 1) && (key_tx)){ //come back to this later
-  digitalWrite(user_led3, tx_key_dit_and_dah_pins_active_state);
+//#ifndef FEATURE_ALPHABET_SEND_PRACTICE
+if(!alpha_pract_in_progress){
+  if ((tx_key_dah) && (configuration.current_tx == 1) && (key_tx)) { //come back to this later
+    digitalWrite(user_led3, tx_key_dit_and_dah_pins_active_state);
+  }
+  if ((tx_key_dah) && (configuration.current_tx == 2) && (key_tx)) { //come back to this later
+    digitalWrite(user_led4, tx_key_dit_and_dah_pins_active_state);
+  }
 }
-if ((tx_key_dah) && (configuration.current_tx == 2) && (key_tx)){ //come back to this later
-  digitalWrite(user_led4, tx_key_dit_and_dah_pins_active_state);
-}
-
+//#endif
 #ifdef FEATURE_QLF
   if (qlf_active) {
     loop_element_lengths((float(configuration.dah_to_dit_ratio / 100.0) * (float(configuration.weighting) / 50) * (random(qlf_dah_min, qlf_dah_max) / 100.0)), keying_compensation, character_wpm);
@@ -5032,13 +5043,16 @@ if ((tx_key_dah) && (configuration.current_tx == 2) && (key_tx)){ //come back to
   if ((tx_key_dah) && (key_tx)) {
     digitalWrite(tx_key_dah, tx_key_dit_and_dah_pins_inactive_state);
   }
-if ((tx_key_dah) && (configuration.current_tx == 1) && (key_tx)){ //come back to this later
-  digitalWrite(user_led3, tx_key_dit_and_dah_pins_inactive_state);
+//#ifndef FEATURE_ALPHABET_SEND_PRACTICE
+if(!alpha_pract_in_progress){
+  if ((tx_key_dah) && (configuration.current_tx == 1) && (key_tx)) { //come back to this later
+    digitalWrite(user_led3, tx_key_dit_and_dah_pins_inactive_state);
+  }
+  if ((tx_key_dah) && (configuration.current_tx == 2) && (key_tx)) { //come back to this later
+    digitalWrite(user_led4, tx_key_dit_and_dah_pins_inactive_state);
+  }
 }
-if ((tx_key_dah) && (configuration.current_tx == 2) && (key_tx)){ //come back to this later
-  digitalWrite(user_led4, tx_key_dit_and_dah_pins_inactive_state);
-}
-
+//#endif
 #ifdef DEBUG_VARIABLE_DUMP
   dah_end_time = millis();
 #endif
@@ -5251,7 +5265,7 @@ void tx_and_sidetone_key (int state)
       if (key_tx) {
         if (current_tx_key_line) {
           digitalWrite (current_tx_key_line, tx_key_line_inactive_state);
-       }
+        }
 #if defined(OPTION_WINKEY_2_SUPPORT) && defined(FEATURE_WINKEY_EMULATION)
         if ((wk2_both_tx_activated) && (tx_key_line_2)) {
           digitalWrite (tx_key_line_2, LOW);
@@ -6126,7 +6140,7 @@ void command_mode()
           } else {
             lcd_center_print_timed("Send Practice", 0, default_display_msg_delay);
             if (LCD_ROWS > 1) {
-              lcd_center_print_timed("Cmd button to exit", 1, default_display_msg_delay);
+              lcd_center_print_timed("Press knob to exit", 1, default_display_msg_delay);
             }
           }
 #endif
@@ -17566,8 +17580,8 @@ int paddle_pin_read(int pin_to_read) {
 //---------------------------------------------------------------------
 #ifdef FEATURE_ALPHABET_SEND_PRACTICE
 void command_alphabet_send_practice() {
-
   // contributed by Ryan, KC2ZWM
+  alpha_pract_in_progress = 1;
 
   int cw_char;
   char letter = 'A';
@@ -17610,7 +17624,7 @@ void command_alphabet_send_practice() {
   if (wrong_answer_led) {
     digitalWrite(wrong_answer_led, LOW);
   }
-
+     alpha_pract_in_progress = 0;
 }
 #endif //FEATURE_ALPHABET_SEND_PRACTICE
 
