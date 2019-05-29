@@ -18,6 +18,15 @@
 #define ptt_tx_4 0
 #define ptt_tx_5 0
 #define ptt_tx_6 0
+#define analog_buttons_pin A1   // Rev D nanokeyer
+#define lcd_rs A2
+#define lcd_enable 10
+#define lcd_d4 6
+#define lcd_d5 7
+#define lcd_d6 8
+#define lcd_d7 9
+#define ps2_keyboard_data A3    // Rev D nanokeyer
+#define ps2_keyboard_clock 3
 #define tx_key_dit 0            // if defined, goes active for dit (any transmitter) - customized with tx_key_dit_and_dah_pins_active_state and tx_key_dit_and_dah_pins_inactive_state
 #define tx_key_dah 0            // if defined, goes active for dah (any transmitter) - customized with tx_key_dit_and_dah_pins_active_state and tx_key_dit_and_dah_pins_inactive_state
 
