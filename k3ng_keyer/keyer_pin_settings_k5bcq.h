@@ -1,5 +1,4 @@
 /* Pins - you must review these and configure ! */
-
 #ifndef keyer_pin_settings_h
 #define keyer_pin_settings_h
 /* User LED headers
@@ -116,7 +115,7 @@ FEATURE_SIDETONE_SWITCH
 #endif //FEATURE_STRAIGHT_KEY
 
 #ifdef FEATURE_CW_DECODER
-  #define cw_decoder_pin A11 //A5 //A3
+  #define cw_decoder_pin A11          //A5 //A3
   #ifdef OPTION_CW_DECODER_GOERTZEL_AUDIO_DETECTOR
     #define cw_decoder_audio_input_pin A0 // this must be an analog pin!
   #endif //OPTION_CW_DECODER_GOERTZEL_AUDIO_DETECTOR
