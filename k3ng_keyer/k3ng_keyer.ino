@@ -4903,16 +4903,16 @@ void send_dit() {
   if ((tx_key_dit) && (key_tx)) {
     digitalWrite(tx_key_dit, tx_key_dit_and_dah_pins_active_state);
   }
-//#ifndef FEATURE_ALPHABET_SEND_PRACTICE
-if(!alpha_pract_in_progress){
-  if ((tx_key_dit) && (configuration.current_tx == 1) && (key_tx)) { //come back to this later
-    digitalWrite(user_led3, tx_key_dit_and_dah_pins_active_state);
+  //#ifndef FEATURE_ALPHABET_SEND_PRACTICE
+  if (!alpha_pract_in_progress) {
+    if ((tx_key_dit) && (configuration.current_tx == 1) && (key_tx)) { //come back to this later
+      digitalWrite(user_led3, tx_key_dit_and_dah_pins_active_state);
+    }
+    if ((tx_key_dit) && (configuration.current_tx == 2) && (key_tx)) { //come back to this later
+      digitalWrite(user_led4, tx_key_dit_and_dah_pins_active_state);
+    }
   }
-  if ((tx_key_dit) && (configuration.current_tx == 2) && (key_tx)) { //come back to this later
-    digitalWrite(user_led4, tx_key_dit_and_dah_pins_active_state);
-  }
-}
-//#endif
+  //#endif
 #ifdef FEATURE_QLF
   if (qlf_active) {
     loop_element_lengths((1.0 * (float(configuration.weighting) / 50) * (random(qlf_dit_min, qlf_dit_max) / 100.0)), keying_compensation, character_wpm);
@@ -4928,16 +4928,16 @@ if(!alpha_pract_in_progress){
   if ((tx_key_dit) && (key_tx)) {
     digitalWrite(tx_key_dit, tx_key_dit_and_dah_pins_inactive_state);
   }
-//#ifndef FEATURE_ALPHABET_SEND_PRACTICE
-if(!alpha_pract_in_progress){
-  if ((tx_key_dit) && (configuration.current_tx == 1) && (key_tx)) { //come back to this later
-    digitalWrite(user_led3, tx_key_dit_and_dah_pins_inactive_state);
+  //#ifndef FEATURE_ALPHABET_SEND_PRACTICE
+  if (!alpha_pract_in_progress) {
+    if ((tx_key_dit) && (configuration.current_tx == 1) && (key_tx)) { //come back to this later
+      digitalWrite(user_led3, tx_key_dit_and_dah_pins_inactive_state);
+    }
+    if ((tx_key_dit) && (configuration.current_tx == 2) && (key_tx)) { //come back to this later
+      digitalWrite(user_led4, tx_key_dit_and_dah_pins_inactive_state);
+    }
   }
-  if ((tx_key_dit) && (configuration.current_tx == 2) && (key_tx)) { //come back to this later
-    digitalWrite(user_led4, tx_key_dit_and_dah_pins_inactive_state);
-  }
-}
-//#endif
+  //#endif
 #ifdef DEBUG_VARIABLE_DUMP
   dit_end_time = millis();
 #endif
@@ -5020,16 +5020,16 @@ void send_dah() {
   if ((tx_key_dah) && (key_tx)) { //do dah
     digitalWrite(tx_key_dah, tx_key_dit_and_dah_pins_active_state);
   }
-//#ifndef FEATURE_ALPHABET_SEND_PRACTICE
-if(!alpha_pract_in_progress){
-  if ((tx_key_dah) && (configuration.current_tx == 1) && (key_tx)) { //come back to this later
-    digitalWrite(user_led3, tx_key_dit_and_dah_pins_active_state);
+  //#ifndef FEATURE_ALPHABET_SEND_PRACTICE
+  if (!alpha_pract_in_progress) {
+    if ((tx_key_dah) && (configuration.current_tx == 1) && (key_tx)) { //come back to this later
+      digitalWrite(user_led3, tx_key_dit_and_dah_pins_active_state);
+    }
+    if ((tx_key_dah) && (configuration.current_tx == 2) && (key_tx)) { //come back to this later
+      digitalWrite(user_led4, tx_key_dit_and_dah_pins_active_state);
+    }
   }
-  if ((tx_key_dah) && (configuration.current_tx == 2) && (key_tx)) { //come back to this later
-    digitalWrite(user_led4, tx_key_dit_and_dah_pins_active_state);
-  }
-}
-//#endif
+  //#endif
 #ifdef FEATURE_QLF
   if (qlf_active) {
     loop_element_lengths((float(configuration.dah_to_dit_ratio / 100.0) * (float(configuration.weighting) / 50) * (random(qlf_dah_min, qlf_dah_max) / 100.0)), keying_compensation, character_wpm);
@@ -5043,16 +5043,16 @@ if(!alpha_pract_in_progress){
   if ((tx_key_dah) && (key_tx)) {
     digitalWrite(tx_key_dah, tx_key_dit_and_dah_pins_inactive_state);
   }
-//#ifndef FEATURE_ALPHABET_SEND_PRACTICE
-if(!alpha_pract_in_progress){
-  if ((tx_key_dah) && (configuration.current_tx == 1) && (key_tx)) { //come back to this later
-    digitalWrite(user_led3, tx_key_dit_and_dah_pins_inactive_state);
+  //#ifndef FEATURE_ALPHABET_SEND_PRACTICE
+  if (!alpha_pract_in_progress) {
+    if ((tx_key_dah) && (configuration.current_tx == 1) && (key_tx)) { //come back to this later
+      digitalWrite(user_led3, tx_key_dit_and_dah_pins_inactive_state);
+    }
+    if ((tx_key_dah) && (configuration.current_tx == 2) && (key_tx)) { //come back to this later
+      digitalWrite(user_led4, tx_key_dit_and_dah_pins_inactive_state);
+    }
   }
-  if ((tx_key_dah) && (configuration.current_tx == 2) && (key_tx)) { //come back to this later
-    digitalWrite(user_led4, tx_key_dit_and_dah_pins_inactive_state);
-  }
-}
-//#endif
+  //#endif
 #ifdef DEBUG_VARIABLE_DUMP
   dah_end_time = millis();
 #endif
@@ -7709,7 +7709,9 @@ void service_dit_dah_buffers()
         }
 
 #ifdef FEATURE_PADDLE_ECHO
-        paddle_echo_buffer_decode_time = millis() + (float((cw_echo_timing_factor * 3000.0) / configuration.wpm) * length_letterspace);
+        //zzzzzz
+
+        //paddle_echo_buffer_decode_time = millis() + (float((cw_echo_timing_factor*3000.0)/configuration.wpm)*length_letterspace);
 #endif //FEATURE_PADDLE_ECHO 
 
       } else {
@@ -8188,8 +8190,7 @@ void send_char(byte cw_char, byte omit_letterspace)
           case ',': send_the_dits_and_dahs(".-.-"); break;
           case '.': send_the_dits_and_dahs("..--.."); break;
           case '?': send_the_dits_and_dahs("-..-."); break;
-          //            case '!': send_the_dits_and_dahs("---.");break;
-          case '!': send_the_dits_and_dahs("--..--"); break; //sp5iou 20180328
+          case '!': send_the_dits_and_dahs("---."); break;
           case ':': send_the_dits_and_dahs("-.-&.&."); break;
           case ';': send_the_dits_and_dahs("...&.."); break;
           case '-': send_the_dits_and_dahs("....&.-.."); break;
@@ -8390,10 +8391,24 @@ void service_send_buffer(byte no_print)
           remove_from_send_buffer();
           if (send_buffer_bytes) {
             send_char(send_buffer_array[0], OMIT_LETTERSPACE);
+#ifdef FEATURE_WINKEY_EMULATION
+            if (winkey_host_open) {
+              // Must echo back PROSIGN characters sent  N6TV
+              winkey_port_write(0xc4 | winkey_sending | winkey_xoff, 0); // N6TV
+              winkey_port_write(send_buffer_array[0], 0); // N6TV
+            }
+#endif //FEATURE_WINKEY_EMULATION
             remove_from_send_buffer();
           }
           if (send_buffer_bytes) {
             send_char(send_buffer_array[0], KEYER_NORMAL);
+#ifdef FEATURE_WINKEY_EMULATION
+            if (winkey_host_open) {
+              // Must echo back PROSIGN characters sent  N6TV
+              winkey_port_write(0xc4 | winkey_sending | winkey_xoff, 0); // N6TV
+              winkey_port_write(send_buffer_array[0], 0); // N6TV
+            }
+#endif //FEATURE_WINKEY_EMULATION
             remove_from_send_buffer();
           }
         }
@@ -14021,7 +14036,8 @@ int convert_cw_number_to_ascii (long number_in)
 #if !defined(OPTION_PROSIGN_SUPPORT)
     case 2111212: return '*'; break; // BK
 #endif
-    case 221122: return 44; break;  // ,
+    //    case 221122: return 44; break;  // ,
+    case 221122: return ','; break;
     case 121212: return '.'; break;
     case 122121: return '@'; break;
     case 222222: return 92; break;  // special hack; six dahs = \ (backslash)
@@ -17624,7 +17640,7 @@ void command_alphabet_send_practice() {
   if (wrong_answer_led) {
     digitalWrite(wrong_answer_led, LOW);
   }
-     alpha_pract_in_progress = 0;
+  alpha_pract_in_progress = 0;
 }
 #endif //FEATURE_ALPHABET_SEND_PRACTICE
 
