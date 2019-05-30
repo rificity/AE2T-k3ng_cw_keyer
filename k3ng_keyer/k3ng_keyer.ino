@@ -840,6 +840,9 @@ byte async_eeprom_write = 0;
 
 
   ---------------------------------------------------------------------------------------------------------*/
+#if (defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)) && defined(FEATURE_BEACON)
+char beacon_requested = 0; //flag to start beacon from keypad command
+#endif
 
 void setup()
 {
@@ -889,6 +892,11 @@ void loop()
 #endif  //OPTION_WATCHDOG_TIMER
 
 #if defined(FEATURE_BEACON) && defined(FEATURE_MEMORIES)
+  if (beacon_requested == 1) {
+    keyer_machine_mode == BEACON;
+    beacon_requested = 0;
+  }
+
   if (keyer_machine_mode == BEACON) {
     delay(201);
     while (keyer_machine_mode == BEACON) {  // if we're in beacon mode, just keep playing memory 1
@@ -1269,7 +1277,13 @@ void service_keypad() {
     }
 
   } //if(key)
+  /*
 
+    if (beacon_requested) {
+      keyer_machine_mode == BEACON;
+      beacon_requested = 0;
+    }
+  */
 } // service_keypad()
 #endif //defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)
 
@@ -7994,9 +8008,7 @@ void send_char(byte cw_char, byte omit_letterspace)
       //case '&': send_dit(); loop_element_lengths(3); send_dits(3); break;
       case '.': send_the_dits_and_dahs(".-.-.-"); break;
       case ',': send_the_dits_and_dahs("--..--"); break;
-      case '!': send_the_dits_and_dahs("--..--"); break; //sp5iou 20180328
       case '\'': send_the_dits_and_dahs(".----."); break; // apostrophe
-      //      case '!': send_the_dits_and_dahs("-.-.--");break;//sp5iou 20180328
       case '(': send_the_dits_and_dahs("-.--."); break;
       case ')': send_the_dits_and_dahs("-.--.-"); break;
       case '&': send_the_dits_and_dahs(".-..."); break;
@@ -14037,7 +14049,7 @@ int convert_cw_number_to_ascii (long number_in)
 #if !defined(OPTION_PROSIGN_SUPPORT)
     case 2111212: return '*'; break; // BK
 #endif
-//    case 221122: return 44; break;  // ,
+    //    case 221122: return 44; break;  // ,
     case 221122: return ','; break;
     case 121212: return '.'; break;
     case 122121: return '@'; break;
@@ -20586,7 +20598,7 @@ void debug_blink() {
   // --------------------------------------------------------------
 */
 
-/************ testing code *********************************************/
+//-----------------keypad in command mode ---------------------
 #if defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)
 void service_keypad_cmd() {
 
@@ -20616,6 +20628,29 @@ void service_keypad_cmd() {
         lcd_center_print_timed("TX 2", 0, default_display_msg_delay);
 #endif
         break;
+        // -------------------- beacon mode ----------------
+#ifdef FEATURE_BEACON
+      case '0':
+        //        keyer_machine_mode = BEACON; //KEYER_NORMAL //COMMAND_MODE
+        beacon_requested = 1;
+        repeat_memory = 0; //button number - 1
+#ifdef FEATURE_DISPLAY
+        lcd_center_print_timed("Beacon On", 0, default_display_msg_delay);
+#endif
+        beep();
+        break;
+      case '#': // change beacon delay time
+        configuration.memory_repeat_time += 1000;
+        if (configuration.memory_repeat_time > 9999) configuration.memory_repeat_time = 1000;
+        //        configuration.memory_repeat_time = 1000;
+        config_dirty = 1;
+#ifdef FEATURE_DISPLAY
+        lcd_center_print_timed("Rpt time: " + String(configuration.memory_repeat_time), 0, default_display_msg_delay);
+#endif //FEATURE_DISPLAY
+        beep();
+        break;
+#endif //FEATURE_BEACON
+      // --------------------------------------------------------
       case '*':
         escape_command_mode = 1; // 1/TRUE to exit command mode
         break;
