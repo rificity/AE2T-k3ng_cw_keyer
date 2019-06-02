@@ -842,6 +842,7 @@ byte async_eeprom_write = 0;
   ---------------------------------------------------------------------------------------------------------*/
 #if (defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)) && defined(FEATURE_BEACON)
 char beacon_requested = 0; //flag to start beacon from keypad command
+//char cancel_beacon = 0;
 #endif
 
 void setup()
@@ -893,13 +894,18 @@ void loop()
 
 #if defined(FEATURE_BEACON) && defined(FEATURE_MEMORIES)
   if (beacon_requested == 1) {
-    keyer_machine_mode == BEACON;
+    keyer_machine_mode = BEACON;
     beacon_requested = 0;
   }
 
   if (keyer_machine_mode == BEACON) {
     delay(201);
     while (keyer_machine_mode == BEACON) {  // if we're in beacon mode, just keep playing memory 1
+      //      if (cancel_beacon == 1) {
+      //        keyer_machine_mode = KEYER_NORMAL;
+      //        cancel_beacon = 0;
+      //        beacon_requested = 0;
+      //      }
       if (!send_buffer_bytes) {
         add_to_send_buffer(SERIAL_SEND_BUFFER_MEMORY_NUMBER);
         add_to_send_buffer(0);
@@ -20628,6 +20634,23 @@ void service_keypad_cmd() {
         lcd_center_print_timed("TX 2", 0, default_display_msg_delay);
 #endif
         break;
+      case '3': // toggle sidetone on/off
+        if (configuration.sidetone_mode == SIDETONE_PADDLE_ONLY) {
+          configuration.sidetone_mode = SIDETONE_OFF;
+          boop();
+          lcd_center_print_timed("Sidetone Off", 0, default_display_msg_delay);
+        } else if (configuration.sidetone_mode == SIDETONE_ON) {
+          configuration.sidetone_mode = SIDETONE_PADDLE_ONLY;
+          beep();
+          lcd_center_print_timed("Sidetone Paddle", 0, default_display_msg_delay);
+          beep();
+        } else {
+          configuration.sidetone_mode = SIDETONE_ON;
+          beep();
+          lcd_center_print_timed("Sidetone On", 0, default_display_msg_delay);
+        }
+        config_dirty = 1;
+        break;
         // -------------------- beacon mode ----------------
 #ifdef FEATURE_BEACON
       case '0':
@@ -20639,9 +20662,16 @@ void service_keypad_cmd() {
 #endif
         beep();
         break;
+      //      case '8':
+      //        cancel_beacon = 1;
+      //#ifdef FEATURE_DISPLAY
+      //        lcd_center_print_timed("Beacon Off", 0, default_display_msg_delay);
+      //#endif
+      //        beep();
+      //        break;
       case '#': // change beacon delay time
-        configuration.memory_repeat_time += 1000;
-        if (configuration.memory_repeat_time > 9999) configuration.memory_repeat_time = 1000;
+        configuration.memory_repeat_time += 500;
+        if (configuration.memory_repeat_time > 9999) configuration.memory_repeat_time = 500;
         //        configuration.memory_repeat_time = 1000;
         config_dirty = 1;
 #ifdef FEATURE_DISPLAY
