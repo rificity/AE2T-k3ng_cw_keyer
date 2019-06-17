@@ -756,7 +756,6 @@ byte colPins [KEYPAD_COLS] = {Col2, Col1, Col0}; //Arduino Mega Pins: 34,35,36--
 
 #if defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)
 Keypad kpd = Keypad(makeKeymap(keys), rowPins, colPins, KEYPAD_ROWS, KEYPAD_COLS);
-char escape_command_mode = 0;
 #endif
 
 unsigned long millis_rollover = 0;
@@ -1222,9 +1221,7 @@ void service_keypad() {
         //play_memory(mem10); //MEMORY 10
         break;
       case '*':
-        escape_command_mode = 0;
-        command_mode();
-        //        boop();
+        boop();
         break;
       case '#':
         if (LCD_ROWS == 4) {
@@ -5760,13 +5757,7 @@ void command_mode()
 #ifdef FEATURE_ROTARY_ENCODER
       check_rotary_encoder();
 #endif //FEATURE_ROTARY_ENCODER    
-#if defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)
-      service_keypad_cmd();
-      if (escape_command_mode == 1) {
-        stay_in_command_mode = 0;
-        looping = 0;
-      }
-#endif
+
       check_paddles();
 
       if (dit_buffer) {
@@ -20603,94 +20594,3 @@ void debug_blink() {
   #endif // FEATURE_CLOCK
   // --------------------------------------------------------------
 */
-
-//-----------------keypad in command mode ---------------------
-#if defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)
-void service_keypad_cmd() {
-
-  // Code contributed by Jack, W0XR
-
-  char key = kpd.getKey();
-
-  if (key) { // Check for a valid key.
-
-#if defined(DEBUG_KEYPAD_SERIAL)
-    debug_serial_port->print("service_keypad: key:");
-    debug_serial_port->println(key);
-#endif
-
-    switch (key) {
-      case '1':
-        switch_to_tx_silent(1);
-        beep();
-#ifdef FEATURE_DISPLAY
-        lcd_center_print_timed("TX 1", 0, default_display_msg_delay);
-#endif
-        break;
-      case '2':
-        switch_to_tx_silent(2);
-        beep();
-#ifdef FEATURE_DISPLAY
-        lcd_center_print_timed("TX 2", 0, default_display_msg_delay);
-#endif
-        break;
-      case '3': // toggle sidetone on/off
-        if (configuration.sidetone_mode == SIDETONE_PADDLE_ONLY) {
-          configuration.sidetone_mode = SIDETONE_OFF;
-          boop();
-          lcd_center_print_timed("Sidetone Off", 0, default_display_msg_delay);
-        } else if (configuration.sidetone_mode == SIDETONE_ON) {
-          configuration.sidetone_mode = SIDETONE_PADDLE_ONLY;
-          beep();
-          lcd_center_print_timed("Sidetone Paddle", 0, default_display_msg_delay);
-          beep();
-        } else {
-          configuration.sidetone_mode = SIDETONE_ON;
-          beep();
-          lcd_center_print_timed("Sidetone On", 0, default_display_msg_delay);
-        }
-        config_dirty = 1;
-        break;
-        // -------------------- beacon mode ----------------
-#ifdef FEATURE_BEACON
-      case '0':
-        //        keyer_machine_mode = BEACON; //KEYER_NORMAL //COMMAND_MODE
-        beacon_requested = 1;
-        repeat_memory = 0; //button number - 1
-#ifdef FEATURE_DISPLAY
-        lcd_center_print_timed("Beacon On", 0, default_display_msg_delay);
-#endif
-        beep();
-        break;
-      //      case '8':
-      //        cancel_beacon = 1;
-      //#ifdef FEATURE_DISPLAY
-      //        lcd_center_print_timed("Beacon Off", 0, default_display_msg_delay);
-      //#endif
-      //        beep();
-      //        break;
-      case '#': // change beacon delay time
-        configuration.memory_repeat_time += 500;
-        if (configuration.memory_repeat_time > 9999) configuration.memory_repeat_time = 500;
-        //        configuration.memory_repeat_time = 1000;
-        config_dirty = 1;
-#ifdef FEATURE_DISPLAY
-        lcd_center_print_timed("Rpt time: " + String(configuration.memory_repeat_time), 0, default_display_msg_delay);
-#endif //FEATURE_DISPLAY
-        beep();
-        break;
-#endif //FEATURE_BEACON
-      // --------------------------------------------------------
-      case '*':
-        escape_command_mode = 1; // 1/TRUE to exit command mode
-        break;
-      default:
-        escape_command_mode = 0;
-        beep();
-        break;
-    }
-
-  } //if(key)
-
-} // service_keypad_cmd()
-#endif //defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)
