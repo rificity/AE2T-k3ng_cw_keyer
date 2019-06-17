@@ -714,7 +714,6 @@ byte colPins [KEYPAD_COLS] = {Col2, Col1, Col0}; //Arduino Mega Pins: 34,35,36--
 
 #if defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)
 Keypad kpd = Keypad(makeKeymap(keys), rowPins, colPins, KEYPAD_ROWS, KEYPAD_COLS);
-char escape_command_mode = 0;
 #endif
 
 unsigned long millis_rollover = 0;
@@ -1166,9 +1165,7 @@ void service_keypad() {
         //play_memory(mem10); //MEMORY 10
         break;
       case '*':
-        command_mode();
-        escape_command_mode = 0;
-        //        boop();
+        boop();
         break;
       case '#':
         if (LCD_ROWS == 4) {
@@ -5736,13 +5733,6 @@ void command_mode()
 #ifdef FEATURE_ROTARY_ENCODER
       check_rotary_encoder();
 #endif //FEATURE_ROTARY_ENCODER    
-#if defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)
-      service_keypad_cmd();
-      if (escape_command_mode == 1) {
-        stay_in_command_mode = 0;
-        looping = 0;
-      }
-#endif
 
       check_paddles();
 
@@ -20202,50 +20192,3 @@ void debug_blink() {
 // Congratulations.  You've gotten to the end.  But this is just the beginning.
 //
 //
-
-
-
-
-// keypad service routine for use in command mode
-#if defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)
-void service_keypad_cmd() {
-
-  // Code contributed by Jack, W0XR
-
-  char key = kpd.getKey();
-
-  if (key) { // Check for a valid key.
-
-#if defined(DEBUG_KEYPAD_SERIAL)
-    debug_serial_port->print("service_keypad: key:");
-    debug_serial_port->println(key);
-#endif
-
-    switch (key) {
-      case '1':
-        switch_to_tx_silent(1);
-        beep();
-#ifdef FEATURE_DISPLAY
-        lcd_center_print_timed("TX 1", 0, default_display_msg_delay);
-#endif
-        break;
-      case '2':
-        switch_to_tx_silent(2);
-        beep();
-#ifdef FEATURE_DISPLAY
-        lcd_center_print_timed("TX 2", 0, default_display_msg_delay);
-#endif
-        break;
-      case '*':
-        escape_command_mode = 1; // 1/TRUE to exit command mode
-        break;
-      default:
-        escape_command_mode = 0;
-        beep();
-        break;
-    }
-
-  } //if(key)
-
-} // service_keypad_cmd()
-#endif //defined(FEATURE_4x4_KEYPAD) || defined(FEATURE_3x4_KEYPAD)
